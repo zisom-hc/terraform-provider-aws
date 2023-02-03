@@ -60,7 +60,7 @@ func testAccHSM_disappears(t *testing.T) {
 			{
 				Config: testAccHSMConfig_subnetID(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckClusterExists(ctx, resourceName),
+					testAccCheckHSMExists(ctx, resourceName),
 					acctest.CheckResourceDisappears(ctx, acctest.Provider, tfcloudhsmv2.ResourceHSM(), resourceName),
 					// Verify Delete error handling
 					acctest.CheckResourceDisappears(ctx, acctest.Provider, tfcloudhsmv2.ResourceHSM(), resourceName),
