@@ -71,30 +71,6 @@ func testAccHSM_disappears(t *testing.T) {
 	})
 }
 
-func testAccHSM_disappears_Cluster(t *testing.T) {
-	ctx := acctest.Context(t)
-	clusterResourceName := "aws_cloudhsm_v2_cluster.test"
-	resourceName := "aws_cloudhsm_v2_hsm.test"
-
-	resource.Test(t, resource.TestCase{
-		PreCheck:                 func() { acctest.PreCheck(t) },
-		ErrorCheck:               acctest.ErrorCheck(t, cloudhsmv2.EndpointsID),
-		ProtoV5ProviderFactories: acctest.ProtoV5ProviderFactories,
-		CheckDestroy:             testAccCheckClusterDestroy(ctx),
-		Steps: []resource.TestStep{
-			{
-				Config: testAccHSMConfig_subnetID(),
-				Check: resource.ComposeTestCheckFunc(
-					testAccCheckClusterExists(ctx, resourceName),
-					acctest.CheckResourceDisappears(ctx, acctest.Provider, tfcloudhsmv2.ResourceHSM(), resourceName),
-					acctest.CheckResourceDisappears(ctx, acctest.Provider, tfcloudhsmv2.ResourceCluster(), clusterResourceName),
-				),
-				ExpectNonEmptyPlan: true,
-			},
-		},
-	})
-}
-
 func testAccHSM_AvailabilityZone(t *testing.T) {
 	ctx := acctest.Context(t)
 	resourceName := "aws_cloudhsm_v2_hsm.test"
